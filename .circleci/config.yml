@@ -1,0 +1,26 @@
+version: 2.1
+orbs:
+  ruby: circleci/ruby@0.1.2
+  slack: circleci/slack@3.4.2
+
+jobs:
+  test:
+    docker:
+      - image: circleci/ruby:2.6.0-stretch-node
+    resource_class: small
+    executor: ruby/default
+    steps:
+      - checkout
+      - ruby/bundle-install
+      - run:
+          name: start test
+          command: bundle exec rspec
+      - slack/status:
+          failure_message: "Build #${CIRCLE_BUILD_NUM} of ${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}@${CIRCLE_BRANCH} by ${CIRCLE_USERNAME} failed."
+          success_message: "Build #${CIRCLE_BUILD_NUM} of ${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}@${CIRCLE_BRANCH} by ${CIRCLE_USERNAME} successed."
+          webhook: '${SLACK_WEBHOOK}'
+
+workflows:
+  rspec_test:
+    jobs:
+      - test

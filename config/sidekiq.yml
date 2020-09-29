@@ -1,0 +1,17 @@
+:verbose: false
+:concurrency: 10
+:timeout: 25
+:pidfile: /var/run/sidekiq.pid
+:logfile: /var/log/sidekiq.log
+
+:queues:
+  - critical
+  - default
+  - low
+
+development:
+  :concurrency: 10
+production:
+  :concurrency: 20
+staging:
+  :concurrency: 5
