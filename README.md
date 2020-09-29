@@ -53,7 +53,7 @@
 ##### run test
 `rspec`
 
-## 注意事項 :warning:
+## Warning :warning:
 Check the code whether require the gem only installed in development or test or not, e.g. `require byebug`\
 It will cause the puma server starting failed, puma access log will only log "early terminatation of worker"\
 **DIFFICULT TO DEBUG**
